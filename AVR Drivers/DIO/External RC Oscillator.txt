@@ -1,0 +1,1 @@
+External RC Oscillator should be connected between GND and XTAL1, while leaving XTAL2 not connected.
