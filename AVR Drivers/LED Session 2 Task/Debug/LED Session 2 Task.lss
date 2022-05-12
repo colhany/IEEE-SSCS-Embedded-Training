@@ -3,29 +3,29 @@ LED Session 2 Task.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000008  00800100  00000538  000005ac  2**0
+  0 .data         00000008  00800100  0000058c  00000600  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000538  00000000  00000000  00000074  2**1
+  1 .text         0000058c  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  000005b4  2**0
+  2 .comment      00000030  00000000  00000000  00000608  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000005e4  2**2
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000638  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000068  00000000  00000000  00000624  2**0
+  4 .debug_aranges 00000068  00000000  00000000  00000678  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   000011b4  00000000  00000000  0000068c  2**0
+  5 .debug_info   0000121b  00000000  00000000  000006e0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 00000843  00000000  00000000  00001840  2**0
+  6 .debug_abbrev 00000843  00000000  00000000  000018fb  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00000689  00000000  00000000  00002083  2**0
+  7 .debug_line   000006bb  00000000  00000000  0000213e  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  000000a8  00000000  00000000  0000270c  2**2
+  8 .debug_frame  000000a8  00000000  00000000  000027fc  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    00000551  00000000  00000000  000027b4  2**0
+  9 .debug_str    00000559  00000000  00000000  000028a4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    000006c1  00000000  00000000  00002d05  2**0
+ 10 .debug_loc    000006cb  00000000  00000000  00002dfd  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000048  00000000  00000000  000033c6  2**0
+ 11 .debug_ranges 00000048  00000000  00000000  000034c8  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -73,7 +73,7 @@ Disassembly of section .text:
   80:	11 e0       	ldi	r17, 0x01	; 1
   82:	a0 e0       	ldi	r26, 0x00	; 0
   84:	b1 e0       	ldi	r27, 0x01	; 1
-  86:	e8 e3       	ldi	r30, 0x38	; 56
+  86:	ec e8       	ldi	r30, 0x8C	; 140
   88:	f5 e0       	ldi	r31, 0x05	; 5
   8a:	02 c0       	rjmp	.+4      	; 0x90 <__do_copy_data+0x10>
   8c:	05 90       	lpm	r0, Z+
@@ -82,7 +82,7 @@ Disassembly of section .text:
   92:	b1 07       	cpc	r27, r17
   94:	d9 f7       	brne	.-10     	; 0x8c <__do_copy_data+0xc>
   96:	0e 94 9d 00 	call	0x13a	; 0x13a <main>
-  9a:	0c 94 9a 02 	jmp	0x534	; 0x534 <_exit>
+  9a:	0c 94 c4 02 	jmp	0x588	; 0x588 <_exit>
 
 0000009e <__bad_interrupt>:
   9e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -242,7 +242,7 @@ int main(void)
  182:	0d 92       	st	X+, r0
  184:	8a 95       	dec	r24
  186:	e1 f7       	brne	.-8      	; 0x180 <main+0x46>
-	uint8_t i;
+	sint8_t i;
 	
     while (1) 
     {
@@ -298,8 +298,8 @@ int main(void)
  1d2:	90 e0       	ldi	r25, 0x00	; 0
  1d4:	0e 94 76 00 	call	0xec	; 0xec <DIO_uint8_t_GetPinValue>
  1d8:	88 23       	and	r24, r24
- 1da:	f9 f0       	breq	.+62     	; 0x21a <main+0xe0>
- 1dc:	26 c0       	rjmp	.+76     	; 0x22a <main+0xf0>
+ 1da:	09 f1       	breq	.+66     	; 0x21e <main+0xe4>
+ 1dc:	28 c0       	rjmp	.+80     	; 0x22e <main+0xf4>
 		{
 			for(i = 0 ; i < 8 ; i++)
 			{
@@ -310,570 +310,618 @@ int main(void)
  1e4:	fd 1f       	adc	r31, r29
  1e6:	e1 0f       	add	r30, r17
  1e8:	f1 1d       	adc	r31, r1
- 1ea:	f0 80       	ld	r15, Z
- 1ec:	41 e0       	ldi	r20, 0x01	; 1
- 1ee:	6f 2d       	mov	r22, r15
- 1f0:	85 e3       	ldi	r24, 0x35	; 53
- 1f2:	90 e0       	ldi	r25, 0x00	; 0
- 1f4:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
- 1f8:	2f e5       	ldi	r18, 0x5F	; 95
- 1fa:	8a ee       	ldi	r24, 0xEA	; 234
- 1fc:	90 e0       	ldi	r25, 0x00	; 0
- 1fe:	21 50       	subi	r18, 0x01	; 1
- 200:	80 40       	sbci	r24, 0x00	; 0
- 202:	90 40       	sbci	r25, 0x00	; 0
- 204:	e1 f7       	brne	.-8      	; 0x1fe <main+0xc4>
- 206:	00 c0       	rjmp	.+0      	; 0x208 <main+0xce>
- 208:	00 00       	nop
+ 1ea:	17 fd       	sbrc	r17, 7
+ 1ec:	fa 95       	dec	r31
+ 1ee:	00 81       	ld	r16, Z
+ 1f0:	41 e0       	ldi	r20, 0x01	; 1
+ 1f2:	60 2f       	mov	r22, r16
+ 1f4:	85 e3       	ldi	r24, 0x35	; 53
+ 1f6:	90 e0       	ldi	r25, 0x00	; 0
+ 1f8:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
+ 1fc:	2f e5       	ldi	r18, 0x5F	; 95
+ 1fe:	8a ee       	ldi	r24, 0xEA	; 234
+ 200:	90 e0       	ldi	r25, 0x00	; 0
+ 202:	21 50       	subi	r18, 0x01	; 1
+ 204:	80 40       	sbci	r24, 0x00	; 0
+ 206:	90 40       	sbci	r25, 0x00	; 0
+ 208:	e1 f7       	brne	.-8      	; 0x202 <main+0xc8>
+ 20a:	00 c0       	rjmp	.+0      	; 0x20c <main+0xd2>
+ 20c:	00 00       	nop
 				_delay_ms(300);
 				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_LOW);
- 20a:	40 e0       	ldi	r20, 0x00	; 0
- 20c:	6f 2d       	mov	r22, r15
- 20e:	85 e3       	ldi	r24, 0x35	; 53
- 210:	90 e0       	ldi	r25, 0x00	; 0
- 212:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
+ 20e:	40 e0       	ldi	r20, 0x00	; 0
+ 210:	60 2f       	mov	r22, r16
+ 212:	85 e3       	ldi	r24, 0x35	; 53
+ 214:	90 e0       	ldi	r25, 0x00	; 0
+ 216:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
 			_delay_ms(500);
 		}
 		
 		if(!DIO_uint8_t_GetPinValue(DIO_PUINT8_PORTA, DIO_UINT8_PIN1))
 		{
 			for(i = 0 ; i < 8 ; i++)
- 216:	1f 5f       	subi	r17, 0xFF	; 255
- 218:	01 c0       	rjmp	.+2      	; 0x21c <main+0xe2>
- 21a:	10 e0       	ldi	r17, 0x00	; 0
- 21c:	18 30       	cpi	r17, 0x08	; 8
- 21e:	f8 f2       	brcs	.-66     	; 0x1de <main+0xa4>
+ 21a:	1f 5f       	subi	r17, 0xFF	; 255
+ 21c:	01 c0       	rjmp	.+2      	; 0x220 <main+0xe6>
+ 21e:	10 e0       	ldi	r17, 0x00	; 0
+ 220:	18 30       	cpi	r17, 0x08	; 8
+ 222:	ec f2       	brlt	.-70     	; 0x1de <main+0xa4>
 				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_HIGH);
 				_delay_ms(300);
 				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_LOW);
 			}
 			
 			DIO_void_SetPortValue(DIO_PUINT8_PORTC, STD_LOW);
- 220:	60 e0       	ldi	r22, 0x00	; 0
- 222:	85 e3       	ldi	r24, 0x35	; 53
- 224:	90 e0       	ldi	r25, 0x00	; 0
- 226:	0e 94 92 00 	call	0x124	; 0x124 <DIO_void_SetPortValue>
+ 224:	60 e0       	ldi	r22, 0x00	; 0
+ 226:	85 e3       	ldi	r24, 0x35	; 53
+ 228:	90 e0       	ldi	r25, 0x00	; 0
+ 22a:	0e 94 92 00 	call	0x124	; 0x124 <DIO_void_SetPortValue>
 		}
 		
 		if(!DIO_uint8_t_GetPinValue(DIO_PUINT8_PORTA, DIO_UINT8_PIN2))
- 22a:	62 e0       	ldi	r22, 0x02	; 2
- 22c:	8b e3       	ldi	r24, 0x3B	; 59
- 22e:	90 e0       	ldi	r25, 0x00	; 0
- 230:	0e 94 76 00 	call	0xec	; 0xec <DIO_uint8_t_GetPinValue>
- 234:	88 23       	and	r24, r24
- 236:	f9 f0       	breq	.+62     	; 0x276 <main+0x13c>
- 238:	26 c0       	rjmp	.+76     	; 0x286 <main+0x14c>
+ 22e:	62 e0       	ldi	r22, 0x02	; 2
+ 230:	8b e3       	ldi	r24, 0x3B	; 59
+ 232:	90 e0       	ldi	r25, 0x00	; 0
+ 234:	0e 94 76 00 	call	0xec	; 0xec <DIO_uint8_t_GetPinValue>
+ 238:	88 23       	and	r24, r24
+ 23a:	09 f1       	breq	.+66     	; 0x27e <main+0x144>
+ 23c:	28 c0       	rjmp	.+80     	; 0x28e <main+0x154>
 		{
-			for(i = 7 ; i > 0 ; i--)
+			for(i = 7 ; i >= 0 ; i--)
 			{
 				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_HIGH);
- 23a:	e1 e0       	ldi	r30, 0x01	; 1
- 23c:	f0 e0       	ldi	r31, 0x00	; 0
- 23e:	ec 0f       	add	r30, r28
- 240:	fd 1f       	adc	r31, r29
- 242:	e1 0f       	add	r30, r17
- 244:	f1 1d       	adc	r31, r1
- 246:	f0 80       	ld	r15, Z
- 248:	41 e0       	ldi	r20, 0x01	; 1
- 24a:	6f 2d       	mov	r22, r15
- 24c:	85 e3       	ldi	r24, 0x35	; 53
- 24e:	90 e0       	ldi	r25, 0x00	; 0
- 250:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
- 254:	2f e5       	ldi	r18, 0x5F	; 95
- 256:	8a ee       	ldi	r24, 0xEA	; 234
- 258:	90 e0       	ldi	r25, 0x00	; 0
- 25a:	21 50       	subi	r18, 0x01	; 1
- 25c:	80 40       	sbci	r24, 0x00	; 0
- 25e:	90 40       	sbci	r25, 0x00	; 0
- 260:	e1 f7       	brne	.-8      	; 0x25a <main+0x120>
- 262:	00 c0       	rjmp	.+0      	; 0x264 <main+0x12a>
- 264:	00 00       	nop
+ 23e:	e1 e0       	ldi	r30, 0x01	; 1
+ 240:	f0 e0       	ldi	r31, 0x00	; 0
+ 242:	ec 0f       	add	r30, r28
+ 244:	fd 1f       	adc	r31, r29
+ 246:	e1 0f       	add	r30, r17
+ 248:	f1 1d       	adc	r31, r1
+ 24a:	17 fd       	sbrc	r17, 7
+ 24c:	fa 95       	dec	r31
+ 24e:	00 81       	ld	r16, Z
+ 250:	41 e0       	ldi	r20, 0x01	; 1
+ 252:	60 2f       	mov	r22, r16
+ 254:	85 e3       	ldi	r24, 0x35	; 53
+ 256:	90 e0       	ldi	r25, 0x00	; 0
+ 258:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
+ 25c:	2f e5       	ldi	r18, 0x5F	; 95
+ 25e:	8a ee       	ldi	r24, 0xEA	; 234
+ 260:	90 e0       	ldi	r25, 0x00	; 0
+ 262:	21 50       	subi	r18, 0x01	; 1
+ 264:	80 40       	sbci	r24, 0x00	; 0
+ 266:	90 40       	sbci	r25, 0x00	; 0
+ 268:	e1 f7       	brne	.-8      	; 0x262 <main+0x128>
+ 26a:	00 c0       	rjmp	.+0      	; 0x26c <main+0x132>
+ 26c:	00 00       	nop
 				_delay_ms(300);
 				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_LOW);
- 266:	40 e0       	ldi	r20, 0x00	; 0
- 268:	6f 2d       	mov	r22, r15
- 26a:	85 e3       	ldi	r24, 0x35	; 53
- 26c:	90 e0       	ldi	r25, 0x00	; 0
- 26e:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
+ 26e:	40 e0       	ldi	r20, 0x00	; 0
+ 270:	60 2f       	mov	r22, r16
+ 272:	85 e3       	ldi	r24, 0x35	; 53
+ 274:	90 e0       	ldi	r25, 0x00	; 0
+ 276:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
 			DIO_void_SetPortValue(DIO_PUINT8_PORTC, STD_LOW);
 		}
 		
 		if(!DIO_uint8_t_GetPinValue(DIO_PUINT8_PORTA, DIO_UINT8_PIN2))
 		{
-			for(i = 7 ; i > 0 ; i--)
- 272:	11 50       	subi	r17, 0x01	; 1
- 274:	01 c0       	rjmp	.+2      	; 0x278 <main+0x13e>
- 276:	17 e0       	ldi	r17, 0x07	; 7
- 278:	11 11       	cpse	r17, r1
- 27a:	df cf       	rjmp	.-66     	; 0x23a <main+0x100>
+			for(i = 7 ; i >= 0 ; i--)
+ 27a:	11 50       	subi	r17, 0x01	; 1
+ 27c:	01 c0       	rjmp	.+2      	; 0x280 <main+0x146>
+ 27e:	17 e0       	ldi	r17, 0x07	; 7
+ 280:	11 23       	and	r17, r17
+ 282:	ec f6       	brge	.-70     	; 0x23e <main+0x104>
 				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_HIGH);
 				_delay_ms(300);
 				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_LOW);
 			}
 			
 			DIO_void_SetPortValue(DIO_PUINT8_PORTC, STD_LOW);
- 27c:	60 e0       	ldi	r22, 0x00	; 0
- 27e:	85 e3       	ldi	r24, 0x35	; 53
- 280:	90 e0       	ldi	r25, 0x00	; 0
- 282:	0e 94 92 00 	call	0x124	; 0x124 <DIO_void_SetPortValue>
+ 284:	60 e0       	ldi	r22, 0x00	; 0
+ 286:	85 e3       	ldi	r24, 0x35	; 53
+ 288:	90 e0       	ldi	r25, 0x00	; 0
+ 28a:	0e 94 92 00 	call	0x124	; 0x124 <DIO_void_SetPortValue>
 		}
 		
 		if(!DIO_uint8_t_GetPinValue(DIO_PUINT8_PORTA, DIO_UINT8_PIN3))
- 286:	63 e0       	ldi	r22, 0x03	; 3
- 288:	8b e3       	ldi	r24, 0x3B	; 59
- 28a:	90 e0       	ldi	r25, 0x00	; 0
- 28c:	0e 94 76 00 	call	0xec	; 0xec <DIO_uint8_t_GetPinValue>
- 290:	88 23       	and	r24, r24
- 292:	51 f1       	breq	.+84     	; 0x2e8 <main+0x1ae>
- 294:	31 c0       	rjmp	.+98     	; 0x2f8 <main+0x1be>
+ 28e:	63 e0       	ldi	r22, 0x03	; 3
+ 290:	8b e3       	ldi	r24, 0x3B	; 59
+ 292:	90 e0       	ldi	r25, 0x00	; 0
+ 294:	0e 94 76 00 	call	0xec	; 0xec <DIO_uint8_t_GetPinValue>
+ 298:	88 23       	and	r24, r24
+ 29a:	61 f1       	breq	.+88     	; 0x2f4 <main+0x1ba>
+ 29c:	33 c0       	rjmp	.+102    	; 0x304 <main+0x1ca>
 		{
 			for(i = 0 ; i < 4 ; i++)
 			{
 				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_HIGH);
- 296:	e1 2e       	mov	r14, r17
- 298:	f1 2c       	mov	r15, r1
- 29a:	e1 e0       	ldi	r30, 0x01	; 1
- 29c:	f0 e0       	ldi	r31, 0x00	; 0
- 29e:	ec 0f       	add	r30, r28
- 2a0:	fd 1f       	adc	r31, r29
- 2a2:	ee 0d       	add	r30, r14
- 2a4:	ff 1d       	adc	r31, r15
- 2a6:	41 e0       	ldi	r20, 0x01	; 1
- 2a8:	60 81       	ld	r22, Z
- 2aa:	85 e3       	ldi	r24, 0x35	; 53
- 2ac:	90 e0       	ldi	r25, 0x00	; 0
- 2ae:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
+ 29e:	e1 2e       	mov	r14, r17
+ 2a0:	01 2e       	mov	r0, r17
+ 2a2:	00 0c       	add	r0, r0
+ 2a4:	ff 08       	sbc	r15, r15
+ 2a6:	e1 e0       	ldi	r30, 0x01	; 1
+ 2a8:	f0 e0       	ldi	r31, 0x00	; 0
+ 2aa:	ec 0f       	add	r30, r28
+ 2ac:	fd 1f       	adc	r31, r29
+ 2ae:	ee 0d       	add	r30, r14
+ 2b0:	ff 1d       	adc	r31, r15
+ 2b2:	41 e0       	ldi	r20, 0x01	; 1
+ 2b4:	60 81       	ld	r22, Z
+ 2b6:	85 e3       	ldi	r24, 0x35	; 53
+ 2b8:	90 e0       	ldi	r25, 0x00	; 0
+ 2ba:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
 				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[7 - i], STD_HIGH);
- 2b2:	e7 e0       	ldi	r30, 0x07	; 7
- 2b4:	f0 e0       	ldi	r31, 0x00	; 0
- 2b6:	ee 19       	sub	r30, r14
- 2b8:	ff 09       	sbc	r31, r15
- 2ba:	81 e0       	ldi	r24, 0x01	; 1
- 2bc:	90 e0       	ldi	r25, 0x00	; 0
- 2be:	8c 0f       	add	r24, r28
- 2c0:	9d 1f       	adc	r25, r29
- 2c2:	e8 0f       	add	r30, r24
- 2c4:	f9 1f       	adc	r31, r25
- 2c6:	41 e0       	ldi	r20, 0x01	; 1
- 2c8:	60 81       	ld	r22, Z
- 2ca:	85 e3       	ldi	r24, 0x35	; 53
- 2cc:	90 e0       	ldi	r25, 0x00	; 0
- 2ce:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
- 2d2:	9f e5       	ldi	r25, 0x5F	; 95
- 2d4:	2a ee       	ldi	r18, 0xEA	; 234
- 2d6:	80 e0       	ldi	r24, 0x00	; 0
- 2d8:	91 50       	subi	r25, 0x01	; 1
- 2da:	20 40       	sbci	r18, 0x00	; 0
- 2dc:	80 40       	sbci	r24, 0x00	; 0
- 2de:	e1 f7       	brne	.-8      	; 0x2d8 <main+0x19e>
- 2e0:	00 c0       	rjmp	.+0      	; 0x2e2 <main+0x1a8>
- 2e2:	00 00       	nop
+ 2be:	e7 e0       	ldi	r30, 0x07	; 7
+ 2c0:	f0 e0       	ldi	r31, 0x00	; 0
+ 2c2:	ee 19       	sub	r30, r14
+ 2c4:	ff 09       	sbc	r31, r15
+ 2c6:	81 e0       	ldi	r24, 0x01	; 1
+ 2c8:	90 e0       	ldi	r25, 0x00	; 0
+ 2ca:	8c 0f       	add	r24, r28
+ 2cc:	9d 1f       	adc	r25, r29
+ 2ce:	e8 0f       	add	r30, r24
+ 2d0:	f9 1f       	adc	r31, r25
+ 2d2:	41 e0       	ldi	r20, 0x01	; 1
+ 2d4:	60 81       	ld	r22, Z
+ 2d6:	85 e3       	ldi	r24, 0x35	; 53
+ 2d8:	90 e0       	ldi	r25, 0x00	; 0
+ 2da:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
+ 2de:	9f e5       	ldi	r25, 0x5F	; 95
+ 2e0:	2a ee       	ldi	r18, 0xEA	; 234
+ 2e2:	80 e0       	ldi	r24, 0x00	; 0
+ 2e4:	91 50       	subi	r25, 0x01	; 1
+ 2e6:	20 40       	sbci	r18, 0x00	; 0
+ 2e8:	80 40       	sbci	r24, 0x00	; 0
+ 2ea:	e1 f7       	brne	.-8      	; 0x2e4 <main+0x1aa>
+ 2ec:	00 c0       	rjmp	.+0      	; 0x2ee <main+0x1b4>
+ 2ee:	00 00       	nop
 			DIO_void_SetPortValue(DIO_PUINT8_PORTC, STD_LOW);
 		}
 		
 		if(!DIO_uint8_t_GetPinValue(DIO_PUINT8_PORTA, DIO_UINT8_PIN3))
 		{
 			for(i = 0 ; i < 4 ; i++)
- 2e4:	1f 5f       	subi	r17, 0xFF	; 255
- 2e6:	01 c0       	rjmp	.+2      	; 0x2ea <main+0x1b0>
- 2e8:	10 e0       	ldi	r17, 0x00	; 0
- 2ea:	14 30       	cpi	r17, 0x04	; 4
- 2ec:	a0 f2       	brcs	.-88     	; 0x296 <main+0x15c>
+ 2f0:	1f 5f       	subi	r17, 0xFF	; 255
+ 2f2:	01 c0       	rjmp	.+2      	; 0x2f6 <main+0x1bc>
+ 2f4:	10 e0       	ldi	r17, 0x00	; 0
+ 2f6:	14 30       	cpi	r17, 0x04	; 4
+ 2f8:	94 f2       	brlt	.-92     	; 0x29e <main+0x164>
 				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_HIGH);
 				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[7 - i], STD_HIGH);
 				_delay_ms(300);
 			}
 			
 			DIO_void_SetPortValue(DIO_PUINT8_PORTC, STD_LOW);
- 2ee:	60 e0       	ldi	r22, 0x00	; 0
- 2f0:	85 e3       	ldi	r24, 0x35	; 53
- 2f2:	90 e0       	ldi	r25, 0x00	; 0
- 2f4:	0e 94 92 00 	call	0x124	; 0x124 <DIO_void_SetPortValue>
+ 2fa:	60 e0       	ldi	r22, 0x00	; 0
+ 2fc:	85 e3       	ldi	r24, 0x35	; 53
+ 2fe:	90 e0       	ldi	r25, 0x00	; 0
+ 300:	0e 94 92 00 	call	0x124	; 0x124 <DIO_void_SetPortValue>
 		}
 		
 		if(!DIO_uint8_t_GetPinValue(DIO_PUINT8_PORTA, DIO_UINT8_PIN4))
- 2f8:	64 e0       	ldi	r22, 0x04	; 4
- 2fa:	8b e3       	ldi	r24, 0x3B	; 59
- 2fc:	90 e0       	ldi	r25, 0x00	; 0
- 2fe:	0e 94 76 00 	call	0xec	; 0xec <DIO_uint8_t_GetPinValue>
- 302:	81 11       	cpse	r24, r1
- 304:	2a c0       	rjmp	.+84     	; 0x35a <main+0x220>
- 306:	13 e0       	ldi	r17, 0x03	; 3
+ 304:	64 e0       	ldi	r22, 0x04	; 4
+ 306:	8b e3       	ldi	r24, 0x3B	; 59
+ 308:	90 e0       	ldi	r25, 0x00	; 0
+ 30a:	0e 94 76 00 	call	0xec	; 0xec <DIO_uint8_t_GetPinValue>
+ 30e:	88 23       	and	r24, r24
+ 310:	61 f1       	breq	.+88     	; 0x36a <main+0x230>
+ 312:	33 c0       	rjmp	.+102    	; 0x37a <main+0x240>
 		{
 			for(i = 3 ; i >= 0 ; i--)
 			{
 				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_HIGH);
- 308:	e1 2e       	mov	r14, r17
- 30a:	f1 2c       	mov	r15, r1
- 30c:	e1 e0       	ldi	r30, 0x01	; 1
- 30e:	f0 e0       	ldi	r31, 0x00	; 0
- 310:	ec 0f       	add	r30, r28
- 312:	fd 1f       	adc	r31, r29
- 314:	ee 0d       	add	r30, r14
- 316:	ff 1d       	adc	r31, r15
- 318:	41 e0       	ldi	r20, 0x01	; 1
- 31a:	60 81       	ld	r22, Z
- 31c:	85 e3       	ldi	r24, 0x35	; 53
- 31e:	90 e0       	ldi	r25, 0x00	; 0
- 320:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
-				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[7 - i], STD_HIGH);
- 324:	e7 e0       	ldi	r30, 0x07	; 7
- 326:	f0 e0       	ldi	r31, 0x00	; 0
- 328:	ee 19       	sub	r30, r14
- 32a:	ff 09       	sbc	r31, r15
- 32c:	81 e0       	ldi	r24, 0x01	; 1
+ 314:	e1 2e       	mov	r14, r17
+ 316:	01 2e       	mov	r0, r17
+ 318:	00 0c       	add	r0, r0
+ 31a:	ff 08       	sbc	r15, r15
+ 31c:	e1 e0       	ldi	r30, 0x01	; 1
+ 31e:	f0 e0       	ldi	r31, 0x00	; 0
+ 320:	ec 0f       	add	r30, r28
+ 322:	fd 1f       	adc	r31, r29
+ 324:	ee 0d       	add	r30, r14
+ 326:	ff 1d       	adc	r31, r15
+ 328:	41 e0       	ldi	r20, 0x01	; 1
+ 32a:	60 81       	ld	r22, Z
+ 32c:	85 e3       	ldi	r24, 0x35	; 53
  32e:	90 e0       	ldi	r25, 0x00	; 0
- 330:	8c 0f       	add	r24, r28
- 332:	9d 1f       	adc	r25, r29
- 334:	e8 0f       	add	r30, r24
- 336:	f9 1f       	adc	r31, r25
- 338:	41 e0       	ldi	r20, 0x01	; 1
- 33a:	60 81       	ld	r22, Z
- 33c:	85 e3       	ldi	r24, 0x35	; 53
+ 330:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
+				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[7 - i], STD_HIGH);
+ 334:	e7 e0       	ldi	r30, 0x07	; 7
+ 336:	f0 e0       	ldi	r31, 0x00	; 0
+ 338:	ee 19       	sub	r30, r14
+ 33a:	ff 09       	sbc	r31, r15
+ 33c:	81 e0       	ldi	r24, 0x01	; 1
  33e:	90 e0       	ldi	r25, 0x00	; 0
- 340:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
- 344:	9f e5       	ldi	r25, 0x5F	; 95
- 346:	2a ee       	ldi	r18, 0xEA	; 234
- 348:	80 e0       	ldi	r24, 0x00	; 0
- 34a:	91 50       	subi	r25, 0x01	; 1
- 34c:	20 40       	sbci	r18, 0x00	; 0
- 34e:	80 40       	sbci	r24, 0x00	; 0
- 350:	e1 f7       	brne	.-8      	; 0x34a <main+0x210>
- 352:	00 c0       	rjmp	.+0      	; 0x354 <main+0x21a>
- 354:	00 00       	nop
+ 340:	8c 0f       	add	r24, r28
+ 342:	9d 1f       	adc	r25, r29
+ 344:	e8 0f       	add	r30, r24
+ 346:	f9 1f       	adc	r31, r25
+ 348:	41 e0       	ldi	r20, 0x01	; 1
+ 34a:	60 81       	ld	r22, Z
+ 34c:	85 e3       	ldi	r24, 0x35	; 53
+ 34e:	90 e0       	ldi	r25, 0x00	; 0
+ 350:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
+ 354:	9f e5       	ldi	r25, 0x5F	; 95
+ 356:	2a ee       	ldi	r18, 0xEA	; 234
+ 358:	80 e0       	ldi	r24, 0x00	; 0
+ 35a:	91 50       	subi	r25, 0x01	; 1
+ 35c:	20 40       	sbci	r18, 0x00	; 0
+ 35e:	80 40       	sbci	r24, 0x00	; 0
+ 360:	e1 f7       	brne	.-8      	; 0x35a <main+0x220>
+ 362:	00 c0       	rjmp	.+0      	; 0x364 <main+0x22a>
+ 364:	00 00       	nop
 			DIO_void_SetPortValue(DIO_PUINT8_PORTC, STD_LOW);
 		}
 		
 		if(!DIO_uint8_t_GetPinValue(DIO_PUINT8_PORTA, DIO_UINT8_PIN4))
 		{
 			for(i = 3 ; i >= 0 ; i--)
- 356:	11 50       	subi	r17, 0x01	; 1
- 358:	d7 cf       	rjmp	.-82     	; 0x308 <main+0x1ce>
-			}
-			
-			DIO_void_SetPortValue(DIO_PUINT8_PORTC, STD_LOW);
-		}
-		
-		if(!DIO_uint8_t_GetPinValue(DIO_PUINT8_PORTA, DIO_UINT8_PIN5))
- 35a:	65 e0       	ldi	r22, 0x05	; 5
- 35c:	8b e3       	ldi	r24, 0x3B	; 59
- 35e:	90 e0       	ldi	r25, 0x00	; 0
- 360:	0e 94 76 00 	call	0xec	; 0xec <DIO_uint8_t_GetPinValue>
- 364:	81 11       	cpse	r24, r1
- 366:	41 c0       	rjmp	.+130    	; 0x3ea <main+0x2b0>
- 368:	1e c0       	rjmp	.+60     	; 0x3a6 <main+0x26c>
-		{
-			for(i = 0 ; i < 8 ; i++)
-			{
+ 366:	11 50       	subi	r17, 0x01	; 1
+ 368:	01 c0       	rjmp	.+2      	; 0x36c <main+0x232>
+ 36a:	13 e0       	ldi	r17, 0x03	; 3
+ 36c:	11 23       	and	r17, r17
+ 36e:	94 f6       	brge	.-92     	; 0x314 <main+0x1da>
 				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_HIGH);
- 36a:	e1 e0       	ldi	r30, 0x01	; 1
- 36c:	f0 e0       	ldi	r31, 0x00	; 0
- 36e:	ec 0f       	add	r30, r28
- 370:	fd 1f       	adc	r31, r29
- 372:	e1 0f       	add	r30, r17
- 374:	f1 1d       	adc	r31, r1
- 376:	f0 80       	ld	r15, Z
- 378:	41 e0       	ldi	r20, 0x01	; 1
- 37a:	6f 2d       	mov	r22, r15
- 37c:	85 e3       	ldi	r24, 0x35	; 53
- 37e:	90 e0       	ldi	r25, 0x00	; 0
- 380:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
- 384:	9f e5       	ldi	r25, 0x5F	; 95
- 386:	2a ee       	ldi	r18, 0xEA	; 234
- 388:	80 e0       	ldi	r24, 0x00	; 0
- 38a:	91 50       	subi	r25, 0x01	; 1
- 38c:	20 40       	sbci	r18, 0x00	; 0
- 38e:	80 40       	sbci	r24, 0x00	; 0
- 390:	e1 f7       	brne	.-8      	; 0x38a <main+0x250>
- 392:	00 c0       	rjmp	.+0      	; 0x394 <main+0x25a>
- 394:	00 00       	nop
-				_delay_ms(300);
-				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_LOW);
- 396:	40 e0       	ldi	r20, 0x00	; 0
- 398:	6f 2d       	mov	r22, r15
- 39a:	85 e3       	ldi	r24, 0x35	; 53
- 39c:	90 e0       	ldi	r25, 0x00	; 0
- 39e:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
-			DIO_void_SetPortValue(DIO_PUINT8_PORTC, STD_LOW);
-		}
-		
-		if(!DIO_uint8_t_GetPinValue(DIO_PUINT8_PORTA, DIO_UINT8_PIN5))
-		{
-			for(i = 0 ; i < 8 ; i++)
- 3a2:	1f 5f       	subi	r17, 0xFF	; 255
- 3a4:	01 c0       	rjmp	.+2      	; 0x3a8 <main+0x26e>
- 3a6:	10 e0       	ldi	r17, 0x00	; 0
- 3a8:	18 30       	cpi	r17, 0x08	; 8
- 3aa:	f8 f2       	brcs	.-66     	; 0x36a <main+0x230>
- 3ac:	17 e0       	ldi	r17, 0x07	; 7
-				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_LOW);
-			}
-			
-			for(i = 7 ; i >= 0 ; i--)
-			{
-				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_HIGH);
- 3ae:	e1 e0       	ldi	r30, 0x01	; 1
- 3b0:	f0 e0       	ldi	r31, 0x00	; 0
- 3b2:	ec 0f       	add	r30, r28
- 3b4:	fd 1f       	adc	r31, r29
- 3b6:	e1 0f       	add	r30, r17
- 3b8:	f1 1d       	adc	r31, r1
- 3ba:	f0 80       	ld	r15, Z
- 3bc:	41 e0       	ldi	r20, 0x01	; 1
- 3be:	6f 2d       	mov	r22, r15
- 3c0:	85 e3       	ldi	r24, 0x35	; 53
- 3c2:	90 e0       	ldi	r25, 0x00	; 0
- 3c4:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
- 3c8:	9f e5       	ldi	r25, 0x5F	; 95
- 3ca:	2a ee       	ldi	r18, 0xEA	; 234
- 3cc:	80 e0       	ldi	r24, 0x00	; 0
- 3ce:	91 50       	subi	r25, 0x01	; 1
- 3d0:	20 40       	sbci	r18, 0x00	; 0
- 3d2:	80 40       	sbci	r24, 0x00	; 0
- 3d4:	e1 f7       	brne	.-8      	; 0x3ce <main+0x294>
- 3d6:	00 c0       	rjmp	.+0      	; 0x3d8 <main+0x29e>
- 3d8:	00 00       	nop
-				_delay_ms(300);
-				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_LOW);
- 3da:	40 e0       	ldi	r20, 0x00	; 0
- 3dc:	6f 2d       	mov	r22, r15
- 3de:	85 e3       	ldi	r24, 0x35	; 53
- 3e0:	90 e0       	ldi	r25, 0x00	; 0
- 3e2:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
-				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_HIGH);
-				_delay_ms(300);
-				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_LOW);
-			}
-			
-			for(i = 7 ; i >= 0 ; i--)
- 3e6:	11 50       	subi	r17, 0x01	; 1
- 3e8:	e2 cf       	rjmp	.-60     	; 0x3ae <main+0x274>
-			}
-			
-			DIO_void_SetPortValue(DIO_PUINT8_PORTC, STD_LOW);
-		}
-		
-		if(!DIO_uint8_t_GetPinValue(DIO_PUINT8_PORTA, DIO_UINT8_PIN6))
- 3ea:	66 e0       	ldi	r22, 0x06	; 6
- 3ec:	8b e3       	ldi	r24, 0x3B	; 59
- 3ee:	90 e0       	ldi	r25, 0x00	; 0
- 3f0:	0e 94 76 00 	call	0xec	; 0xec <DIO_uint8_t_GetPinValue>
- 3f4:	81 11       	cpse	r24, r1
- 3f6:	38 c0       	rjmp	.+112    	; 0x468 <__DATA_REGION_LENGTH__+0x68>
- 3f8:	17 c0       	rjmp	.+46     	; 0x428 <__DATA_REGION_LENGTH__+0x28>
-		{
-			for(i = 0 ; i < 8 ; i++)
-			{
-				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_HIGH);
- 3fa:	e1 e0       	ldi	r30, 0x01	; 1
- 3fc:	f0 e0       	ldi	r31, 0x00	; 0
- 3fe:	ec 0f       	add	r30, r28
- 400:	fd 1f       	adc	r31, r29
- 402:	e1 0f       	add	r30, r17
- 404:	f1 1d       	adc	r31, r1
- 406:	41 e0       	ldi	r20, 0x01	; 1
- 408:	60 81       	ld	r22, Z
- 40a:	85 e3       	ldi	r24, 0x35	; 53
- 40c:	90 e0       	ldi	r25, 0x00	; 0
- 40e:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
- 412:	9f e5       	ldi	r25, 0x5F	; 95
- 414:	2a ee       	ldi	r18, 0xEA	; 234
- 416:	80 e0       	ldi	r24, 0x00	; 0
- 418:	91 50       	subi	r25, 0x01	; 1
- 41a:	20 40       	sbci	r18, 0x00	; 0
- 41c:	80 40       	sbci	r24, 0x00	; 0
- 41e:	e1 f7       	brne	.-8      	; 0x418 <__DATA_REGION_LENGTH__+0x18>
- 420:	00 c0       	rjmp	.+0      	; 0x422 <__DATA_REGION_LENGTH__+0x22>
- 422:	00 00       	nop
-			DIO_void_SetPortValue(DIO_PUINT8_PORTC, STD_LOW);
-		}
-		
-		if(!DIO_uint8_t_GetPinValue(DIO_PUINT8_PORTA, DIO_UINT8_PIN6))
-		{
-			for(i = 0 ; i < 8 ; i++)
- 424:	1f 5f       	subi	r17, 0xFF	; 255
- 426:	01 c0       	rjmp	.+2      	; 0x42a <__DATA_REGION_LENGTH__+0x2a>
- 428:	10 e0       	ldi	r17, 0x00	; 0
- 42a:	18 30       	cpi	r17, 0x08	; 8
- 42c:	30 f3       	brcs	.-52     	; 0x3fa <main+0x2c0>
-			{
-				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_HIGH);
-				_delay_ms(300);
-			}
-			
-			DIO_void_SetPortValue(DIO_PUINT8_PORTC, STD_LOW);
- 42e:	60 e0       	ldi	r22, 0x00	; 0
- 430:	85 e3       	ldi	r24, 0x35	; 53
- 432:	90 e0       	ldi	r25, 0x00	; 0
- 434:	0e 94 92 00 	call	0x124	; 0x124 <DIO_void_SetPortValue>
-			
-			for(i = 7 ; i >= 0 ; i--)
- 438:	17 e0       	ldi	r17, 0x07	; 7
-			{
-				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_HIGH);
- 43a:	e1 e0       	ldi	r30, 0x01	; 1
- 43c:	f0 e0       	ldi	r31, 0x00	; 0
- 43e:	ec 0f       	add	r30, r28
- 440:	fd 1f       	adc	r31, r29
- 442:	e1 0f       	add	r30, r17
- 444:	f1 1d       	adc	r31, r1
- 446:	41 e0       	ldi	r20, 0x01	; 1
- 448:	60 81       	ld	r22, Z
- 44a:	85 e3       	ldi	r24, 0x35	; 53
- 44c:	90 e0       	ldi	r25, 0x00	; 0
- 44e:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
- 452:	9f e5       	ldi	r25, 0x5F	; 95
- 454:	2a ee       	ldi	r18, 0xEA	; 234
- 456:	80 e0       	ldi	r24, 0x00	; 0
- 458:	91 50       	subi	r25, 0x01	; 1
- 45a:	20 40       	sbci	r18, 0x00	; 0
- 45c:	80 40       	sbci	r24, 0x00	; 0
- 45e:	e1 f7       	brne	.-8      	; 0x458 <__DATA_REGION_LENGTH__+0x58>
- 460:	00 c0       	rjmp	.+0      	; 0x462 <__DATA_REGION_LENGTH__+0x62>
- 462:	00 00       	nop
-				_delay_ms(300);
-			}
-			
-			DIO_void_SetPortValue(DIO_PUINT8_PORTC, STD_LOW);
-			
-			for(i = 7 ; i >= 0 ; i--)
- 464:	11 50       	subi	r17, 0x01	; 1
- 466:	e9 cf       	rjmp	.-46     	; 0x43a <__DATA_REGION_LENGTH__+0x3a>
-			}
-			
-			DIO_void_SetPortValue(DIO_PUINT8_PORTC, STD_LOW);
-		}
-		
-		if(!DIO_uint8_t_GetPinValue(DIO_PUINT8_PORTA, DIO_UINT8_PIN7))
- 468:	67 e0       	ldi	r22, 0x07	; 7
- 46a:	8b e3       	ldi	r24, 0x3B	; 59
- 46c:	90 e0       	ldi	r25, 0x00	; 0
- 46e:	0e 94 76 00 	call	0xec	; 0xec <DIO_uint8_t_GetPinValue>
- 472:	81 11       	cpse	r24, r1
- 474:	89 ce       	rjmp	.-750    	; 0x188 <main+0x4e>
- 476:	29 c0       	rjmp	.+82     	; 0x4ca <__DATA_REGION_LENGTH__+0xca>
-		{
-			for(i = 0 ; i < 4 ; i++)
-			{
-				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_HIGH);
- 478:	e1 2e       	mov	r14, r17
- 47a:	f1 2c       	mov	r15, r1
- 47c:	e1 e0       	ldi	r30, 0x01	; 1
- 47e:	f0 e0       	ldi	r31, 0x00	; 0
- 480:	ec 0f       	add	r30, r28
- 482:	fd 1f       	adc	r31, r29
- 484:	ee 0d       	add	r30, r14
- 486:	ff 1d       	adc	r31, r15
- 488:	41 e0       	ldi	r20, 0x01	; 1
- 48a:	60 81       	ld	r22, Z
- 48c:	85 e3       	ldi	r24, 0x35	; 53
- 48e:	90 e0       	ldi	r25, 0x00	; 0
- 490:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
 				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[7 - i], STD_HIGH);
- 494:	e7 e0       	ldi	r30, 0x07	; 7
- 496:	f0 e0       	ldi	r31, 0x00	; 0
- 498:	ee 19       	sub	r30, r14
- 49a:	ff 09       	sbc	r31, r15
- 49c:	81 e0       	ldi	r24, 0x01	; 1
- 49e:	90 e0       	ldi	r25, 0x00	; 0
- 4a0:	8c 0f       	add	r24, r28
- 4a2:	9d 1f       	adc	r25, r29
- 4a4:	e8 0f       	add	r30, r24
- 4a6:	f9 1f       	adc	r31, r25
- 4a8:	41 e0       	ldi	r20, 0x01	; 1
- 4aa:	60 81       	ld	r22, Z
+				_delay_ms(300);
+			}
+			
+			DIO_void_SetPortValue(DIO_PUINT8_PORTC, STD_LOW);
+ 370:	60 e0       	ldi	r22, 0x00	; 0
+ 372:	85 e3       	ldi	r24, 0x35	; 53
+ 374:	90 e0       	ldi	r25, 0x00	; 0
+ 376:	0e 94 92 00 	call	0x124	; 0x124 <DIO_void_SetPortValue>
+		}
+		
+		if(!DIO_uint8_t_GetPinValue(DIO_PUINT8_PORTA, DIO_UINT8_PIN5))
+ 37a:	65 e0       	ldi	r22, 0x05	; 5
+ 37c:	8b e3       	ldi	r24, 0x3B	; 59
+ 37e:	90 e0       	ldi	r25, 0x00	; 0
+ 380:	0e 94 76 00 	call	0xec	; 0xec <DIO_uint8_t_GetPinValue>
+ 384:	88 23       	and	r24, r24
+ 386:	09 f1       	breq	.+66     	; 0x3ca <main+0x290>
+ 388:	4b c0       	rjmp	.+150    	; 0x420 <__DATA_REGION_LENGTH__+0x20>
+		{
+			for(i = 0 ; i < 8 ; i++)
+			{
+				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_HIGH);
+ 38a:	e1 e0       	ldi	r30, 0x01	; 1
+ 38c:	f0 e0       	ldi	r31, 0x00	; 0
+ 38e:	ec 0f       	add	r30, r28
+ 390:	fd 1f       	adc	r31, r29
+ 392:	e1 0f       	add	r30, r17
+ 394:	f1 1d       	adc	r31, r1
+ 396:	17 fd       	sbrc	r17, 7
+ 398:	fa 95       	dec	r31
+ 39a:	00 81       	ld	r16, Z
+ 39c:	41 e0       	ldi	r20, 0x01	; 1
+ 39e:	60 2f       	mov	r22, r16
+ 3a0:	85 e3       	ldi	r24, 0x35	; 53
+ 3a2:	90 e0       	ldi	r25, 0x00	; 0
+ 3a4:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
+ 3a8:	9f e5       	ldi	r25, 0x5F	; 95
+ 3aa:	2a ee       	ldi	r18, 0xEA	; 234
+ 3ac:	80 e0       	ldi	r24, 0x00	; 0
+ 3ae:	91 50       	subi	r25, 0x01	; 1
+ 3b0:	20 40       	sbci	r18, 0x00	; 0
+ 3b2:	80 40       	sbci	r24, 0x00	; 0
+ 3b4:	e1 f7       	brne	.-8      	; 0x3ae <main+0x274>
+ 3b6:	00 c0       	rjmp	.+0      	; 0x3b8 <main+0x27e>
+ 3b8:	00 00       	nop
+				_delay_ms(300);
+				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_LOW);
+ 3ba:	40 e0       	ldi	r20, 0x00	; 0
+ 3bc:	60 2f       	mov	r22, r16
+ 3be:	85 e3       	ldi	r24, 0x35	; 53
+ 3c0:	90 e0       	ldi	r25, 0x00	; 0
+ 3c2:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
+			DIO_void_SetPortValue(DIO_PUINT8_PORTC, STD_LOW);
+		}
+		
+		if(!DIO_uint8_t_GetPinValue(DIO_PUINT8_PORTA, DIO_UINT8_PIN5))
+		{
+			for(i = 0 ; i < 8 ; i++)
+ 3c6:	1f 5f       	subi	r17, 0xFF	; 255
+ 3c8:	01 c0       	rjmp	.+2      	; 0x3cc <main+0x292>
+ 3ca:	10 e0       	ldi	r17, 0x00	; 0
+ 3cc:	18 30       	cpi	r17, 0x08	; 8
+ 3ce:	ec f2       	brlt	.-70     	; 0x38a <main+0x250>
+ 3d0:	17 e0       	ldi	r17, 0x07	; 7
+ 3d2:	1f c0       	rjmp	.+62     	; 0x412 <__DATA_REGION_LENGTH__+0x12>
+				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_LOW);
+			}
+			
+			for(i = 7 ; i >= 0 ; i--)
+			{
+				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_HIGH);
+ 3d4:	e1 e0       	ldi	r30, 0x01	; 1
+ 3d6:	f0 e0       	ldi	r31, 0x00	; 0
+ 3d8:	ec 0f       	add	r30, r28
+ 3da:	fd 1f       	adc	r31, r29
+ 3dc:	e1 0f       	add	r30, r17
+ 3de:	f1 1d       	adc	r31, r1
+ 3e0:	17 fd       	sbrc	r17, 7
+ 3e2:	fa 95       	dec	r31
+ 3e4:	00 81       	ld	r16, Z
+ 3e6:	41 e0       	ldi	r20, 0x01	; 1
+ 3e8:	60 2f       	mov	r22, r16
+ 3ea:	85 e3       	ldi	r24, 0x35	; 53
+ 3ec:	90 e0       	ldi	r25, 0x00	; 0
+ 3ee:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
+ 3f2:	9f e5       	ldi	r25, 0x5F	; 95
+ 3f4:	2a ee       	ldi	r18, 0xEA	; 234
+ 3f6:	80 e0       	ldi	r24, 0x00	; 0
+ 3f8:	91 50       	subi	r25, 0x01	; 1
+ 3fa:	20 40       	sbci	r18, 0x00	; 0
+ 3fc:	80 40       	sbci	r24, 0x00	; 0
+ 3fe:	e1 f7       	brne	.-8      	; 0x3f8 <main+0x2be>
+ 400:	00 c0       	rjmp	.+0      	; 0x402 <__DATA_REGION_LENGTH__+0x2>
+ 402:	00 00       	nop
+				_delay_ms(300);
+				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_LOW);
+ 404:	40 e0       	ldi	r20, 0x00	; 0
+ 406:	60 2f       	mov	r22, r16
+ 408:	85 e3       	ldi	r24, 0x35	; 53
+ 40a:	90 e0       	ldi	r25, 0x00	; 0
+ 40c:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
+				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_HIGH);
+				_delay_ms(300);
+				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_LOW);
+			}
+			
+			for(i = 7 ; i >= 0 ; i--)
+ 410:	11 50       	subi	r17, 0x01	; 1
+ 412:	11 23       	and	r17, r17
+ 414:	fc f6       	brge	.-66     	; 0x3d4 <main+0x29a>
+				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_HIGH);
+				_delay_ms(300);
+				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_LOW);
+			}
+			
+			DIO_void_SetPortValue(DIO_PUINT8_PORTC, STD_LOW);
+ 416:	60 e0       	ldi	r22, 0x00	; 0
+ 418:	85 e3       	ldi	r24, 0x35	; 53
+ 41a:	90 e0       	ldi	r25, 0x00	; 0
+ 41c:	0e 94 92 00 	call	0x124	; 0x124 <DIO_void_SetPortValue>
+		}
+		
+		if(!DIO_uint8_t_GetPinValue(DIO_PUINT8_PORTA, DIO_UINT8_PIN6))
+ 420:	66 e0       	ldi	r22, 0x06	; 6
+ 422:	8b e3       	ldi	r24, 0x3B	; 59
+ 424:	90 e0       	ldi	r25, 0x00	; 0
+ 426:	0e 94 76 00 	call	0xec	; 0xec <DIO_uint8_t_GetPinValue>
+ 42a:	88 23       	and	r24, r24
+ 42c:	d1 f0       	breq	.+52     	; 0x462 <__DATA_REGION_LENGTH__+0x62>
+ 42e:	42 c0       	rjmp	.+132    	; 0x4b4 <__DATA_REGION_LENGTH__+0xb4>
+		{
+			for(i = 0 ; i < 8 ; i++)
+			{
+				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_HIGH);
+ 430:	e1 e0       	ldi	r30, 0x01	; 1
+ 432:	f0 e0       	ldi	r31, 0x00	; 0
+ 434:	ec 0f       	add	r30, r28
+ 436:	fd 1f       	adc	r31, r29
+ 438:	e1 0f       	add	r30, r17
+ 43a:	f1 1d       	adc	r31, r1
+ 43c:	17 fd       	sbrc	r17, 7
+ 43e:	fa 95       	dec	r31
+ 440:	41 e0       	ldi	r20, 0x01	; 1
+ 442:	60 81       	ld	r22, Z
+ 444:	85 e3       	ldi	r24, 0x35	; 53
+ 446:	90 e0       	ldi	r25, 0x00	; 0
+ 448:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
+ 44c:	9f e5       	ldi	r25, 0x5F	; 95
+ 44e:	2a ee       	ldi	r18, 0xEA	; 234
+ 450:	80 e0       	ldi	r24, 0x00	; 0
+ 452:	91 50       	subi	r25, 0x01	; 1
+ 454:	20 40       	sbci	r18, 0x00	; 0
+ 456:	80 40       	sbci	r24, 0x00	; 0
+ 458:	e1 f7       	brne	.-8      	; 0x452 <__DATA_REGION_LENGTH__+0x52>
+ 45a:	00 c0       	rjmp	.+0      	; 0x45c <__DATA_REGION_LENGTH__+0x5c>
+ 45c:	00 00       	nop
+			DIO_void_SetPortValue(DIO_PUINT8_PORTC, STD_LOW);
+		}
+		
+		if(!DIO_uint8_t_GetPinValue(DIO_PUINT8_PORTA, DIO_UINT8_PIN6))
+		{
+			for(i = 0 ; i < 8 ; i++)
+ 45e:	1f 5f       	subi	r17, 0xFF	; 255
+ 460:	01 c0       	rjmp	.+2      	; 0x464 <__DATA_REGION_LENGTH__+0x64>
+ 462:	10 e0       	ldi	r17, 0x00	; 0
+ 464:	18 30       	cpi	r17, 0x08	; 8
+ 466:	24 f3       	brlt	.-56     	; 0x430 <__DATA_REGION_LENGTH__+0x30>
+			{
+				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_HIGH);
+				_delay_ms(300);
+			}
+			
+			DIO_void_SetPortValue(DIO_PUINT8_PORTC, STD_LOW);
+ 468:	60 e0       	ldi	r22, 0x00	; 0
+ 46a:	85 e3       	ldi	r24, 0x35	; 53
+ 46c:	90 e0       	ldi	r25, 0x00	; 0
+ 46e:	0e 94 92 00 	call	0x124	; 0x124 <DIO_void_SetPortValue>
+			
+			for(i = 7 ; i >= 0 ; i--)
+ 472:	17 e0       	ldi	r17, 0x07	; 7
+ 474:	18 c0       	rjmp	.+48     	; 0x4a6 <__DATA_REGION_LENGTH__+0xa6>
+			{
+				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_HIGH);
+ 476:	e1 e0       	ldi	r30, 0x01	; 1
+ 478:	f0 e0       	ldi	r31, 0x00	; 0
+ 47a:	ec 0f       	add	r30, r28
+ 47c:	fd 1f       	adc	r31, r29
+ 47e:	e1 0f       	add	r30, r17
+ 480:	f1 1d       	adc	r31, r1
+ 482:	17 fd       	sbrc	r17, 7
+ 484:	fa 95       	dec	r31
+ 486:	41 e0       	ldi	r20, 0x01	; 1
+ 488:	60 81       	ld	r22, Z
+ 48a:	85 e3       	ldi	r24, 0x35	; 53
+ 48c:	90 e0       	ldi	r25, 0x00	; 0
+ 48e:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
+ 492:	9f e5       	ldi	r25, 0x5F	; 95
+ 494:	2a ee       	ldi	r18, 0xEA	; 234
+ 496:	80 e0       	ldi	r24, 0x00	; 0
+ 498:	91 50       	subi	r25, 0x01	; 1
+ 49a:	20 40       	sbci	r18, 0x00	; 0
+ 49c:	80 40       	sbci	r24, 0x00	; 0
+ 49e:	e1 f7       	brne	.-8      	; 0x498 <__DATA_REGION_LENGTH__+0x98>
+ 4a0:	00 c0       	rjmp	.+0      	; 0x4a2 <__DATA_REGION_LENGTH__+0xa2>
+ 4a2:	00 00       	nop
+				_delay_ms(300);
+			}
+			
+			DIO_void_SetPortValue(DIO_PUINT8_PORTC, STD_LOW);
+			
+			for(i = 7 ; i >= 0 ; i--)
+ 4a4:	11 50       	subi	r17, 0x01	; 1
+ 4a6:	11 23       	and	r17, r17
+ 4a8:	34 f7       	brge	.-52     	; 0x476 <__DATA_REGION_LENGTH__+0x76>
+			{
+				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_HIGH);
+				_delay_ms(300);
+			}
+			
+			DIO_void_SetPortValue(DIO_PUINT8_PORTC, STD_LOW);
+ 4aa:	60 e0       	ldi	r22, 0x00	; 0
  4ac:	85 e3       	ldi	r24, 0x35	; 53
  4ae:	90 e0       	ldi	r25, 0x00	; 0
- 4b0:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
- 4b4:	9f e5       	ldi	r25, 0x5F	; 95
- 4b6:	2a ee       	ldi	r18, 0xEA	; 234
- 4b8:	80 e0       	ldi	r24, 0x00	; 0
- 4ba:	91 50       	subi	r25, 0x01	; 1
- 4bc:	20 40       	sbci	r18, 0x00	; 0
- 4be:	80 40       	sbci	r24, 0x00	; 0
- 4c0:	e1 f7       	brne	.-8      	; 0x4ba <__DATA_REGION_LENGTH__+0xba>
- 4c2:	00 c0       	rjmp	.+0      	; 0x4c4 <__DATA_REGION_LENGTH__+0xc4>
- 4c4:	00 00       	nop
+ 4b0:	0e 94 92 00 	call	0x124	; 0x124 <DIO_void_SetPortValue>
+		}
+		
+		if(!DIO_uint8_t_GetPinValue(DIO_PUINT8_PORTA, DIO_UINT8_PIN7))
+ 4b4:	67 e0       	ldi	r22, 0x07	; 7
+ 4b6:	8b e3       	ldi	r24, 0x3B	; 59
+ 4b8:	90 e0       	ldi	r25, 0x00	; 0
+ 4ba:	0e 94 76 00 	call	0xec	; 0xec <DIO_uint8_t_GetPinValue>
+ 4be:	81 11       	cpse	r24, r1
+ 4c0:	63 ce       	rjmp	.-826    	; 0x188 <main+0x4e>
+ 4c2:	2b c0       	rjmp	.+86     	; 0x51a <__stack+0x1b>
+		{
+			for(i = 0 ; i < 4 ; i++)
+			{
+				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_HIGH);
+ 4c4:	e1 2e       	mov	r14, r17
+ 4c6:	01 2e       	mov	r0, r17
+ 4c8:	00 0c       	add	r0, r0
+ 4ca:	ff 08       	sbc	r15, r15
+ 4cc:	e1 e0       	ldi	r30, 0x01	; 1
+ 4ce:	f0 e0       	ldi	r31, 0x00	; 0
+ 4d0:	ec 0f       	add	r30, r28
+ 4d2:	fd 1f       	adc	r31, r29
+ 4d4:	ee 0d       	add	r30, r14
+ 4d6:	ff 1d       	adc	r31, r15
+ 4d8:	41 e0       	ldi	r20, 0x01	; 1
+ 4da:	60 81       	ld	r22, Z
+ 4dc:	85 e3       	ldi	r24, 0x35	; 53
+ 4de:	90 e0       	ldi	r25, 0x00	; 0
+ 4e0:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
+				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[7 - i], STD_HIGH);
+ 4e4:	e7 e0       	ldi	r30, 0x07	; 7
+ 4e6:	f0 e0       	ldi	r31, 0x00	; 0
+ 4e8:	ee 19       	sub	r30, r14
+ 4ea:	ff 09       	sbc	r31, r15
+ 4ec:	81 e0       	ldi	r24, 0x01	; 1
+ 4ee:	90 e0       	ldi	r25, 0x00	; 0
+ 4f0:	8c 0f       	add	r24, r28
+ 4f2:	9d 1f       	adc	r25, r29
+ 4f4:	e8 0f       	add	r30, r24
+ 4f6:	f9 1f       	adc	r31, r25
+ 4f8:	41 e0       	ldi	r20, 0x01	; 1
+ 4fa:	60 81       	ld	r22, Z
+ 4fc:	85 e3       	ldi	r24, 0x35	; 53
+ 4fe:	90 e0       	ldi	r25, 0x00	; 0
+ 500:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
+ 504:	9f e5       	ldi	r25, 0x5F	; 95
+ 506:	2a ee       	ldi	r18, 0xEA	; 234
+ 508:	80 e0       	ldi	r24, 0x00	; 0
+ 50a:	91 50       	subi	r25, 0x01	; 1
+ 50c:	20 40       	sbci	r18, 0x00	; 0
+ 50e:	80 40       	sbci	r24, 0x00	; 0
+ 510:	e1 f7       	brne	.-8      	; 0x50a <__stack+0xb>
+ 512:	00 c0       	rjmp	.+0      	; 0x514 <__stack+0x15>
+ 514:	00 00       	nop
 			DIO_void_SetPortValue(DIO_PUINT8_PORTC, STD_LOW);
 		}
 		
 		if(!DIO_uint8_t_GetPinValue(DIO_PUINT8_PORTA, DIO_UINT8_PIN7))
 		{
 			for(i = 0 ; i < 4 ; i++)
- 4c6:	1f 5f       	subi	r17, 0xFF	; 255
- 4c8:	01 c0       	rjmp	.+2      	; 0x4cc <__DATA_REGION_LENGTH__+0xcc>
- 4ca:	10 e0       	ldi	r17, 0x00	; 0
- 4cc:	14 30       	cpi	r17, 0x04	; 4
- 4ce:	a0 f2       	brcs	.-88     	; 0x478 <__DATA_REGION_LENGTH__+0x78>
- 4d0:	10 e0       	ldi	r17, 0x00	; 0
- 4d2:	28 c0       	rjmp	.+80     	; 0x524 <__stack+0x25>
-				_delay_ms(300);
+ 516:	1f 5f       	subi	r17, 0xFF	; 255
+ 518:	01 c0       	rjmp	.+2      	; 0x51c <__stack+0x1d>
+ 51a:	10 e0       	ldi	r17, 0x00	; 0
+ 51c:	14 30       	cpi	r17, 0x04	; 4
+ 51e:	94 f2       	brlt	.-92     	; 0x4c4 <__DATA_REGION_LENGTH__+0xc4>
+ 520:	13 e0       	ldi	r17, 0x03	; 3
+ 522:	2a c0       	rjmp	.+84     	; 0x578 <__stack+0x79>
 			}
 			
-			for(i = 0 ; i < 4 ; i++)
+			
+			for(i = 3 ; i >= 0 ; i--)
 			{
-				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_HIGH);
- 4d4:	e1 2e       	mov	r14, r17
- 4d6:	f1 2c       	mov	r15, r1
- 4d8:	e1 e0       	ldi	r30, 0x01	; 1
- 4da:	f0 e0       	ldi	r31, 0x00	; 0
- 4dc:	ec 0f       	add	r30, r28
- 4de:	fd 1f       	adc	r31, r29
- 4e0:	ee 0d       	add	r30, r14
- 4e2:	ff 1d       	adc	r31, r15
- 4e4:	41 e0       	ldi	r20, 0x01	; 1
- 4e6:	60 81       	ld	r22, Z
- 4e8:	85 e3       	ldi	r24, 0x35	; 53
- 4ea:	90 e0       	ldi	r25, 0x00	; 0
- 4ec:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
-				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[7 - i], STD_HIGH);
- 4f0:	e7 e0       	ldi	r30, 0x07	; 7
- 4f2:	f0 e0       	ldi	r31, 0x00	; 0
- 4f4:	ee 19       	sub	r30, r14
- 4f6:	ff 09       	sbc	r31, r15
- 4f8:	81 e0       	ldi	r24, 0x01	; 1
- 4fa:	90 e0       	ldi	r25, 0x00	; 0
- 4fc:	8c 0f       	add	r24, r28
- 4fe:	9d 1f       	adc	r25, r29
- 500:	e8 0f       	add	r30, r24
- 502:	f9 1f       	adc	r31, r25
- 504:	41 e0       	ldi	r20, 0x01	; 1
- 506:	60 81       	ld	r22, Z
- 508:	85 e3       	ldi	r24, 0x35	; 53
- 50a:	90 e0       	ldi	r25, 0x00	; 0
- 50c:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
- 510:	9f e5       	ldi	r25, 0x5F	; 95
- 512:	2a ee       	ldi	r18, 0xEA	; 234
- 514:	80 e0       	ldi	r24, 0x00	; 0
- 516:	91 50       	subi	r25, 0x01	; 1
- 518:	20 40       	sbci	r18, 0x00	; 0
- 51a:	80 40       	sbci	r24, 0x00	; 0
- 51c:	e1 f7       	brne	.-8      	; 0x516 <__stack+0x17>
- 51e:	00 c0       	rjmp	.+0      	; 0x520 <__stack+0x21>
- 520:	00 00       	nop
-				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_HIGH);
+				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_LOW);
+ 524:	e1 2e       	mov	r14, r17
+ 526:	01 2e       	mov	r0, r17
+ 528:	00 0c       	add	r0, r0
+ 52a:	ff 08       	sbc	r15, r15
+ 52c:	e1 e0       	ldi	r30, 0x01	; 1
+ 52e:	f0 e0       	ldi	r31, 0x00	; 0
+ 530:	ec 0f       	add	r30, r28
+ 532:	fd 1f       	adc	r31, r29
+ 534:	ee 0d       	add	r30, r14
+ 536:	ff 1d       	adc	r31, r15
+ 538:	40 e0       	ldi	r20, 0x00	; 0
+ 53a:	60 81       	ld	r22, Z
+ 53c:	85 e3       	ldi	r24, 0x35	; 53
+ 53e:	90 e0       	ldi	r25, 0x00	; 0
+ 540:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
+				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[7 - i], STD_LOW);
+ 544:	e7 e0       	ldi	r30, 0x07	; 7
+ 546:	f0 e0       	ldi	r31, 0x00	; 0
+ 548:	ee 19       	sub	r30, r14
+ 54a:	ff 09       	sbc	r31, r15
+ 54c:	81 e0       	ldi	r24, 0x01	; 1
+ 54e:	90 e0       	ldi	r25, 0x00	; 0
+ 550:	8c 0f       	add	r24, r28
+ 552:	9d 1f       	adc	r25, r29
+ 554:	e8 0f       	add	r30, r24
+ 556:	f9 1f       	adc	r31, r25
+ 558:	40 e0       	ldi	r20, 0x00	; 0
+ 55a:	60 81       	ld	r22, Z
+ 55c:	85 e3       	ldi	r24, 0x35	; 53
+ 55e:	90 e0       	ldi	r25, 0x00	; 0
+ 560:	0e 94 51 00 	call	0xa2	; 0xa2 <DIO_uint8_t_SetPinValue>
+ 564:	9f e5       	ldi	r25, 0x5F	; 95
+ 566:	2a ee       	ldi	r18, 0xEA	; 234
+ 568:	80 e0       	ldi	r24, 0x00	; 0
+ 56a:	91 50       	subi	r25, 0x01	; 1
+ 56c:	20 40       	sbci	r18, 0x00	; 0
+ 56e:	80 40       	sbci	r24, 0x00	; 0
+ 570:	e1 f7       	brne	.-8      	; 0x56a <__stack+0x6b>
+ 572:	00 c0       	rjmp	.+0      	; 0x574 <__stack+0x75>
+ 574:	00 00       	nop
 				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[7 - i], STD_HIGH);
 				_delay_ms(300);
 			}
 			
-			for(i = 0 ; i < 4 ; i++)
- 522:	1f 5f       	subi	r17, 0xFF	; 255
- 524:	14 30       	cpi	r17, 0x04	; 4
- 526:	b0 f2       	brcs	.-84     	; 0x4d4 <__DATA_REGION_LENGTH__+0xd4>
+			
+			for(i = 3 ; i >= 0 ; i--)
+ 576:	11 50       	subi	r17, 0x01	; 1
+ 578:	11 23       	and	r17, r17
+ 57a:	a4 f6       	brge	.-88     	; 0x524 <__stack+0x25>
 				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_LOW);
 				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[7 - i], STD_LOW);
 				_delay_ms(300);
 			}
 			
 			DIO_void_SetPortValue(DIO_PUINT8_PORTC, STD_LOW);
- 528:	60 e0       	ldi	r22, 0x00	; 0
- 52a:	85 e3       	ldi	r24, 0x35	; 53
- 52c:	90 e0       	ldi	r25, 0x00	; 0
- 52e:	0e 94 92 00 	call	0x124	; 0x124 <DIO_void_SetPortValue>
- 532:	2a ce       	rjmp	.-940    	; 0x188 <main+0x4e>
+ 57c:	60 e0       	ldi	r22, 0x00	; 0
+ 57e:	85 e3       	ldi	r24, 0x35	; 53
+ 580:	90 e0       	ldi	r25, 0x00	; 0
+ 582:	0e 94 92 00 	call	0x124	; 0x124 <DIO_void_SetPortValue>
+ 586:	00 ce       	rjmp	.-1024   	; 0x188 <main+0x4e>
 
-00000534 <_exit>:
- 534:	f8 94       	cli
+00000588 <_exit>:
+ 588:	f8 94       	cli
 
-00000536 <__stop_program>:
- 536:	ff cf       	rjmp	.-2      	; 0x536 <__stop_program>
+0000058a <__stop_program>:
+ 58a:	ff cf       	rjmp	.-2      	; 0x58a <__stop_program>

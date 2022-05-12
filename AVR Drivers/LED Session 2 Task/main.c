@@ -21,7 +21,7 @@ int main(void)
 	DIO_void_SetPortValue(DIO_PUINT8_PORTC, STD_LOW);
 	
 	uint8_t ledPins[] = {DIO_UINT8_PIN0, DIO_UINT8_PIN1, DIO_UINT8_PIN2, DIO_UINT8_PIN3, DIO_UINT8_PIN4, DIO_UINT8_PIN5, DIO_UINT8_PIN6, DIO_UINT8_PIN7};
-	uint8_t i;
+	sint8_t i;
 	
     while (1) 
     {
@@ -128,14 +128,8 @@ int main(void)
 				_delay_ms(300);
 			}
 			
-			for(i = 0 ; i < 4 ; i++)
-			{
-				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_HIGH);
-				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[7 - i], STD_HIGH);
-				_delay_ms(300);
-			}
 			
-			for(i = 3 ; i <= 0 ; i--)
+			for(i = 3 ; i >= 0 ; i--)
 			{
 				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[i], STD_LOW);
 				DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTC, ledPins[7 - i], STD_LOW);
@@ -143,6 +137,7 @@ int main(void)
 			}
 			
 			DIO_void_SetPortValue(DIO_PUINT8_PORTC, STD_LOW);
+			
 		}
     }
 }
