@@ -3,27 +3,29 @@ DIO.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000072  00000000  00000000  00000054  2**1
+  0 .text         00000152  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000000  00800060  00800060  000000c6  2**0
+  1 .data         00000000  00800060  00800060  000001a6  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .comment      00000030  00000000  00000000  000000c6  2**0
+  2 .comment      00000030  00000000  00000000  000001a6  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000000f8  2**2
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001d8  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000020  00000000  00000000  00000134  2**0
+  4 .debug_aranges 00000068  00000000  00000000  00000214  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   0000054f  00000000  00000000  00000154  2**0
+  5 .debug_info   000008b2  00000000  00000000  0000027c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 000004da  00000000  00000000  000006a3  2**0
+  6 .debug_abbrev 00000670  00000000  00000000  00000b2e  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   0000014f  00000000  00000000  00000b7d  2**0
+  7 .debug_line   000003e8  00000000  00000000  0000119e  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000024  00000000  00000000  00000ccc  2**2
+  8 .debug_frame  00000098  00000000  00000000  00001588  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    000002f3  00000000  00000000  00000cf0  2**0
+  9 .debug_str    00000468  00000000  00000000  00001620  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_ranges 00000010  00000000  00000000  00000fe3  2**0
+ 10 .debug_loc    0000029d  00000000  00000000  00001a88  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000048  00000000  00000000  00001d25  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -58,23 +60,222 @@ Disassembly of section .text:
   5a:	d8 e0       	ldi	r29, 0x08	; 8
   5c:	de bf       	out	0x3e, r29	; 62
   5e:	cd bf       	out	0x3d, r28	; 61
-  60:	0e 94 36 00 	call	0x6c	; 0x6c <main>
-  64:	0c 94 37 00 	jmp	0x6e	; 0x6e <_exit>
+  60:	0e 94 82 00 	call	0x104	; 0x104 <main>
+  64:	0c 94 a7 00 	jmp	0x14e	; 0x14e <_exit>
 
 00000068 <__bad_interrupt>:
   68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
-0000006c <main>:
-#include "Library/STD_TYPES.h"
-#include "Library/BIT_MATH.h"
-#include "DIO/DIO_Interface.h"
+0000006c <DIO_uint8_t_SetPinDirection>:
+#include "DIO_Private.h"
+#include "DIO_Registers.h"
+
+uint8_t DIO_uint8_t_SetPinDirection(volatile uint8_t * copy_puint8_t_port, uint8_t copy_uint8_t_pin, uint8_t copy_uint8_t_direction)
+{
+	if (copy_uint8_t_pin <= DIO_UINT8_PIN7)
+  6c:	68 30       	cpi	r22, 0x08	; 8
+  6e:	08 f5       	brcc	.+66     	; 0xb2 <DIO_uint8_t_SetPinDirection+0x46>
+	{
+		if (copy_uint8_t_direction == DIO_UINT8_PIN_INPUT)
+  70:	41 11       	cpse	r20, r1
+  72:	0f c0       	rjmp	.+30     	; 0x92 <DIO_uint8_t_SetPinDirection+0x26>
+			CLR_BIT(*(DDR(copy_puint8_t_port)), copy_uint8_t_pin);
+  74:	e8 2f       	mov	r30, r24
+  76:	f9 2f       	mov	r31, r25
+  78:	22 91       	ld	r18, -Z
+  7a:	81 e0       	ldi	r24, 0x01	; 1
+  7c:	90 e0       	ldi	r25, 0x00	; 0
+  7e:	02 c0       	rjmp	.+4      	; 0x84 <DIO_uint8_t_SetPinDirection+0x18>
+  80:	88 0f       	add	r24, r24
+  82:	99 1f       	adc	r25, r25
+  84:	6a 95       	dec	r22
+  86:	e2 f7       	brpl	.-8      	; 0x80 <DIO_uint8_t_SetPinDirection+0x14>
+  88:	80 95       	com	r24
+  8a:	82 23       	and	r24, r18
+  8c:	80 83       	st	Z, r24
+		
+		else if (copy_uint8_t_direction == DIO_UINT8_PIN_OUTPUT)
+			SET_BIT(*(DDR(copy_puint8_t_port)), copy_uint8_t_pin);
+		
+		return 0;
+  8e:	80 e0       	ldi	r24, 0x00	; 0
+  90:	08 95       	ret
+	if (copy_uint8_t_pin <= DIO_UINT8_PIN7)
+	{
+		if (copy_uint8_t_direction == DIO_UINT8_PIN_INPUT)
+			CLR_BIT(*(DDR(copy_puint8_t_port)), copy_uint8_t_pin);
+		
+		else if (copy_uint8_t_direction == DIO_UINT8_PIN_OUTPUT)
+  92:	41 30       	cpi	r20, 0x01	; 1
+  94:	81 f4       	brne	.+32     	; 0xb6 <DIO_uint8_t_SetPinDirection+0x4a>
+			SET_BIT(*(DDR(copy_puint8_t_port)), copy_uint8_t_pin);
+  96:	e8 2f       	mov	r30, r24
+  98:	f9 2f       	mov	r31, r25
+  9a:	22 91       	ld	r18, -Z
+  9c:	81 e0       	ldi	r24, 0x01	; 1
+  9e:	90 e0       	ldi	r25, 0x00	; 0
+  a0:	02 c0       	rjmp	.+4      	; 0xa6 <DIO_uint8_t_SetPinDirection+0x3a>
+  a2:	88 0f       	add	r24, r24
+  a4:	99 1f       	adc	r25, r25
+  a6:	6a 95       	dec	r22
+  a8:	e2 f7       	brpl	.-8      	; 0xa2 <DIO_uint8_t_SetPinDirection+0x36>
+  aa:	82 2b       	or	r24, r18
+  ac:	80 83       	st	Z, r24
+		
+		return 0;
+  ae:	80 e0       	ldi	r24, 0x00	; 0
+  b0:	08 95       	ret
+	}
+	
+	else
+		return ERR_CODE_INVALID_INPUT;
+  b2:	8f ef       	ldi	r24, 0xFF	; 255
+  b4:	08 95       	ret
+			CLR_BIT(*(DDR(copy_puint8_t_port)), copy_uint8_t_pin);
+		
+		else if (copy_uint8_t_direction == DIO_UINT8_PIN_OUTPUT)
+			SET_BIT(*(DDR(copy_puint8_t_port)), copy_uint8_t_pin);
+		
+		return 0;
+  b6:	80 e0       	ldi	r24, 0x00	; 0
+	}
+	
+	else
+		return ERR_CODE_INVALID_INPUT;
+}
+  b8:	08 95       	ret
+
+000000ba <DIO_uint8_t_SetPinValue>:
+
+uint8_t DIO_uint8_t_SetPinValue(volatile uint8_t * copy_puint8_t_port, uint8_t copy_uint8_t_pin, uint8_t copy_uint8_t_Value)
+{
+	if (copy_uint8_t_pin <= DIO_UINT8_PIN7)
+  ba:	68 30       	cpi	r22, 0x08	; 8
+  bc:	f8 f4       	brcc	.+62     	; 0xfc <DIO_uint8_t_SetPinValue+0x42>
+	{
+		if(copy_uint8_t_Value == STD_LOW)
+  be:	41 11       	cpse	r20, r1
+  c0:	0e c0       	rjmp	.+28     	; 0xde <DIO_uint8_t_SetPinValue+0x24>
+			CLR_BIT(*(copy_puint8_t_port), copy_uint8_t_pin);
+  c2:	fc 01       	movw	r30, r24
+  c4:	40 81       	ld	r20, Z
+  c6:	21 e0       	ldi	r18, 0x01	; 1
+  c8:	30 e0       	ldi	r19, 0x00	; 0
+  ca:	02 c0       	rjmp	.+4      	; 0xd0 <DIO_uint8_t_SetPinValue+0x16>
+  cc:	22 0f       	add	r18, r18
+  ce:	33 1f       	adc	r19, r19
+  d0:	6a 95       	dec	r22
+  d2:	e2 f7       	brpl	.-8      	; 0xcc <DIO_uint8_t_SetPinValue+0x12>
+  d4:	20 95       	com	r18
+  d6:	24 23       	and	r18, r20
+  d8:	20 83       	st	Z, r18
+			
+		else if(copy_uint8_t_Value == STD_HIGH)
+			SET_BIT(*(copy_puint8_t_port), copy_uint8_t_pin);
+		
+		return 0;
+  da:	80 e0       	ldi	r24, 0x00	; 0
+  dc:	08 95       	ret
+	if (copy_uint8_t_pin <= DIO_UINT8_PIN7)
+	{
+		if(copy_uint8_t_Value == STD_LOW)
+			CLR_BIT(*(copy_puint8_t_port), copy_uint8_t_pin);
+			
+		else if(copy_uint8_t_Value == STD_HIGH)
+  de:	41 30       	cpi	r20, 0x01	; 1
+  e0:	79 f4       	brne	.+30     	; 0x100 <DIO_uint8_t_SetPinValue+0x46>
+			SET_BIT(*(copy_puint8_t_port), copy_uint8_t_pin);
+  e2:	fc 01       	movw	r30, r24
+  e4:	40 81       	ld	r20, Z
+  e6:	21 e0       	ldi	r18, 0x01	; 1
+  e8:	30 e0       	ldi	r19, 0x00	; 0
+  ea:	02 c0       	rjmp	.+4      	; 0xf0 <DIO_uint8_t_SetPinValue+0x36>
+  ec:	22 0f       	add	r18, r18
+  ee:	33 1f       	adc	r19, r19
+  f0:	6a 95       	dec	r22
+  f2:	e2 f7       	brpl	.-8      	; 0xec <DIO_uint8_t_SetPinValue+0x32>
+  f4:	24 2b       	or	r18, r20
+  f6:	20 83       	st	Z, r18
+		
+		return 0;
+  f8:	80 e0       	ldi	r24, 0x00	; 0
+  fa:	08 95       	ret
+	}
+	
+	else
+		return ERR_CODE_INVALID_INPUT;
+  fc:	8f ef       	ldi	r24, 0xFF	; 255
+  fe:	08 95       	ret
+			CLR_BIT(*(copy_puint8_t_port), copy_uint8_t_pin);
+			
+		else if(copy_uint8_t_Value == STD_HIGH)
+			SET_BIT(*(copy_puint8_t_port), copy_uint8_t_pin);
+		
+		return 0;
+ 100:	80 e0       	ldi	r24, 0x00	; 0
+	}
+	
+	else
+		return ERR_CODE_INVALID_INPUT;
+}
+ 102:	08 95       	ret
+
+00000104 <main>:
+#include <util/delay.h>
+
 
 void main()
 {
-  6c:	08 95       	ret
+	DIO_uint8_t_SetPinDirection(DIO_PUINT8_PORTA, DIO_UINT8_PIN1, DIO_UINT8_PIN_OUTPUT);
+ 104:	41 e0       	ldi	r20, 0x01	; 1
+ 106:	61 e0       	ldi	r22, 0x01	; 1
+ 108:	8b e3       	ldi	r24, 0x3B	; 59
+ 10a:	90 e0       	ldi	r25, 0x00	; 0
+ 10c:	0e 94 36 00 	call	0x6c	; 0x6c <DIO_uint8_t_SetPinDirection>
+	
+	while(1)
+	{
+		DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTA, DIO_UINT8_PIN1, STD_HIGH);
+ 110:	41 e0       	ldi	r20, 0x01	; 1
+ 112:	61 e0       	ldi	r22, 0x01	; 1
+ 114:	8b e3       	ldi	r24, 0x3B	; 59
+ 116:	90 e0       	ldi	r25, 0x00	; 0
+ 118:	0e 94 5d 00 	call	0xba	; 0xba <DIO_uint8_t_SetPinValue>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
 
-0000006e <_exit>:
-  6e:	f8 94       	cli
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 11c:	2f e3       	ldi	r18, 0x3F	; 63
+ 11e:	8d e0       	ldi	r24, 0x0D	; 13
+ 120:	93 e0       	ldi	r25, 0x03	; 3
+ 122:	21 50       	subi	r18, 0x01	; 1
+ 124:	80 40       	sbci	r24, 0x00	; 0
+ 126:	90 40       	sbci	r25, 0x00	; 0
+ 128:	e1 f7       	brne	.-8      	; 0x122 <main+0x1e>
+ 12a:	00 c0       	rjmp	.+0      	; 0x12c <main+0x28>
+ 12c:	00 00       	nop
+		_delay_ms(1000);
+		DIO_uint8_t_SetPinValue(DIO_PUINT8_PORTA, DIO_UINT8_PIN1, STD_LOW);
+ 12e:	40 e0       	ldi	r20, 0x00	; 0
+ 130:	61 e0       	ldi	r22, 0x01	; 1
+ 132:	8b e3       	ldi	r24, 0x3B	; 59
+ 134:	90 e0       	ldi	r25, 0x00	; 0
+ 136:	0e 94 5d 00 	call	0xba	; 0xba <DIO_uint8_t_SetPinValue>
+ 13a:	2f e3       	ldi	r18, 0x3F	; 63
+ 13c:	8d e0       	ldi	r24, 0x0D	; 13
+ 13e:	93 e0       	ldi	r25, 0x03	; 3
+ 140:	21 50       	subi	r18, 0x01	; 1
+ 142:	80 40       	sbci	r24, 0x00	; 0
+ 144:	90 40       	sbci	r25, 0x00	; 0
+ 146:	e1 f7       	brne	.-8      	; 0x140 <main+0x3c>
+ 148:	00 c0       	rjmp	.+0      	; 0x14a <main+0x46>
+ 14a:	00 00       	nop
+ 14c:	e1 cf       	rjmp	.-62     	; 0x110 <main+0xc>
 
-00000070 <__stop_program>:
-  70:	ff cf       	rjmp	.-2      	; 0x70 <__stop_program>
+0000014e <_exit>:
+ 14e:	f8 94       	cli
+
+00000150 <__stop_program>:
+ 150:	ff cf       	rjmp	.-2      	; 0x150 <__stop_program>
